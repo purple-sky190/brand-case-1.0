@@ -118,9 +118,9 @@
             </el-form-item>
 
             <el-form-item label="状态">
-                <el-switch v-model="status"
-                           active-value=1
-                           inactive-value=0
+                <el-switch v-model="editBrand.status"
+                           :active-value="1"
+                           :inactive-value="0"
                 ></el-switch>
             </el-form-item>
 
@@ -225,21 +225,17 @@
                 //禁用双向绑定
                 let brand={...row};
                 this.editBrand=brand;
-                //获取状态，显示在编辑表单上
-                this.status=String(this.editBrand.status);
                 this.editDialogVisible = true;
             },
             //编辑数据
             handleEdit(){
-                // 获取编辑表单中的状态
-                this.editBrand.status=Number(this.status);
                 axios({
                     method:"post",
                     url:"http://localhost:8080/brand-case/brand/editById",
                     data:this.editBrand,
                     charset:"utf-8"
                 }).then(resp=>{
-                    if(resp.data=="success"){
+                    if(resp.data==="success"){
                         this.editDialogVisible=false;
                         //清空对象
                         this.editBrand={};
@@ -379,8 +375,6 @@
         },
         data() {
             return {
-                //表单的禁用或启用状态，字符串类型
-                status:"1",
                 // 当前页码
                 currentPage:1,
                 //总页数
